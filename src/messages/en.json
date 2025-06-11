@@ -1,5 +1,6 @@
 {
   "common": {
+    "home": "Home",
     "deploy_now": "Deploy Now",
     "get_started_by_editing": "Get started by editing",
     "this_is_a_sample_client_component": "This is a sample client component",

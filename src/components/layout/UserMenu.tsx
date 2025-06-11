@@ -3,12 +3,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useSession, signOut } from 'next-auth/react';
+import { useUser, useClerk } from '@clerk/nextjs';
 import { useTranslations } from 'next-intl';
 
 export default function UserMenu() {
   const t = useTranslations();
-  const { data: session, status } = useSession();
+  const { user, isLoaded } = useUser();
+  const { signOut } = useClerk();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -39,18 +40,17 @@ export default function UserMenu() {
     };
   }, []);
 
-  if (status === 'loading') {
+  if (!isLoaded) {
     return null; // Or a loading spinner
   }
 
-  if (!session?.user) {
+  if (!user) {
     return null;
   }
 
   const handleSignOut = async () => {
     setLoading(true);
-    await signOut({ redirect: false });
-    router.push('/');
+    await signOut(() => router.push('/'));
   };
 
   return (
@@ -64,10 +64,10 @@ export default function UserMenu() {
             aria-expanded={isDropdownOpen}
             aria-haspopup="true"
           >
-            {session.user.image ? (
+            {user.imageUrl ? (
               <img
-                src={session.user.image}
-                alt={session.user.name || t('common.user')}
+                src={user.imageUrl}
+                alt={user.fullName || t('common.user')}
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -80,14 +80,14 @@ export default function UserMenu() {
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5">
               <div className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
-                {session.user.image && (
+                {user.imageUrl && (
                   <img
-                    src={session.user.image}
-                    alt={session.user.name || t('common.user')}
+                    src={user.imageUrl}
+                    alt={user.fullName || t('common.user')}
                     className="h-6 w-6 rounded-full mr-2 object-cover"
                   />
                 )}
-                <span className="truncate">{session.user.name || t('common.user')}</span>
+                <span className="truncate">{user.fullName || user.firstName || t('common.user')}</span>
               </div>
               <Link
                 href="/settings"

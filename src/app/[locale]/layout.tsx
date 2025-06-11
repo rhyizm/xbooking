@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import '../globals.css';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
-import NextAuthSessionProviderWrapper from '@/lib/next-auth/components/NextAuthSessionProviderWrapper';
+import { ClerkProvider } from '@clerk/nextjs';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { Content, Header, Sidebar, Wrapper } from '@/components/layout';
 import { MobileSidebarProvider } from '@/components/layout/MobileSidebarContext';
@@ -14,6 +14,7 @@ import {
   User,
   Settings,
   HelpCircle,
+  LayoutDashboard,
 } from "lucide-react";
 import {routing} from '@/i18n/routing';
 
@@ -50,9 +51,14 @@ export default async function RootLayout({
 
   const sidebarItems: SidebarItem[] = [
     {
-      name: t('dashboard'),
+      name: t('home'),
       href: '/',
       icon: <Home className="h-5 w-5" />,
+    },
+    {
+      name: t('dashboard'),
+      href: '/dashboard',
+      icon: <LayoutDashboard className="h-5 w-5" />,
     },
     {
       name: t('users'),
@@ -76,8 +82,8 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <NextAuthSessionProviderWrapper>
+        <ClerkProvider localization={{ locale }}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider>
               <MobileSidebarProvider>
                 <Wrapper>
@@ -89,8 +95,8 @@ export default async function RootLayout({
                 </Wrapper>
               </MobileSidebarProvider>
             </ThemeProvider>
-          </NextAuthSessionProviderWrapper>
-        </NextIntlClientProvider>
+          </NextIntlClientProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

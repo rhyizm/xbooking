@@ -1,5 +1,6 @@
 {
   "common": {
+    "home": "ホーム",
     "deploy_now": "今すぐデプロイ",
     "get_started_by_editing": "編集して開始",
     "this_is_a_sample_client_component": "これはサンプルのクライアントコンポーネントです",

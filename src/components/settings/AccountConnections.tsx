@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useSession } from "next-auth/react";
+import { useUser } from "@clerk/nextjs";
 
 // Define props interface
 interface AccountConnectionsProps {
@@ -18,12 +18,12 @@ export default function AccountConnections({
   googleConnectedText,
   googleConnectText,
 }: AccountConnectionsProps) {
-  const { data: session } = useSession();
+  const { user } = useUser();
   
-  // Check if Google account is connected
-  // In NextAuth, accounts are typically linked during the initial sign-in
-  // This is a simplified version - you may need to adjust based on your NextAuth configuration
-  const isGoogleConnected = !!(session?.user?.email && session.user.email.includes('@gmail.com'));
+  // Check if Google account is connected by looking at external accounts
+  const isGoogleConnected = user?.externalAccounts?.some(
+    account => account.provider === 'google'
+  ) || false;
 
   return (
     <Card>

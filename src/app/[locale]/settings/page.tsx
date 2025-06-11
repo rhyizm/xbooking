@@ -1,15 +1,15 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server'; // Use getTranslations for Server Components
-import { auth } from "@/lib/next-auth/auth"; // Use NextAuth server-side auth
+import { auth } from "@clerk/nextjs/server"; // Use Clerk server-side auth
 import AccountConnections from "@/components/settings/AccountConnections";
 import { SettingsCard } from '@/components/settings/SettingsCard';
 
 export default async function SettingsPage() {
   const t = await getTranslations('settings'); // Use await with getTranslations
-  const session = await auth(); // Get NextAuth session
+  const { userId } = await auth(); // Get Clerk auth
 
-  if (!session?.user) {
-    redirect('/auth');
+  if (!userId) {
+    redirect('/signin');
   }
 
   // Define profile fields using translations
@@ -55,8 +55,8 @@ export default async function SettingsPage() {
         description={t('profile.description')}
         fields={profileFields}
         initialValues={{
-          username: session.user.name || '',
-          email: session.user.email || '',
+          username: '',
+          email: '',
         }}
         onSubmit={handleProfileSubmit}
         submitButtonText={t('profile.saveButton')} // Pass translated button text
