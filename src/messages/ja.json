@@ -1,0 +1,51 @@
+{
+  "common": {
+    "deploy_now": "今すぐデプロイ",
+    "get_started_by_editing": "編集して開始",
+    "this_is_a_sample_client_component": "これはサンプルのクライアントコンポーネントです",
+    "save_and_see_your_changes_instantly": "保存してすぐに変更を確認",
+    "read_our_docs": "ドキュメントを読む",
+    "toggle_theme": "テーマ切替",
+    "english": "English",
+    "japanese": "日本語",
+    "french": "Français",
+    "language": "言語",
+    "user": "ユーザー",
+    "users": "ユーザー",
+    "settings": "設定",
+    "help": "ヘルプ",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfUse": "利用規約",
+    "dashboard": "ダッシュボード"
+  },
+  "auth": {
+    "signIn": "サインイン",
+    "signOut": "サインアウト",
+    "signUp": "アカウント登録",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "resetPassword": "パスワードをリセット",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "hasAccount": "アカウントをお持ちの方はこちら",
+    "noAccount": "アカウントをお持ちでない方はこちら",
+    "googleButton": "Googleでサインイン"
+  },
+  "settings": {
+    "title": "設定",
+    "profile": {
+      "title": "プロフィール",
+      "description": "プロフィール情報を更新します。",
+      "usernameLabel": "ユーザー名",
+      "usernamePlaceholder": "ユーザー名を入力してください",
+      "emailLabel": "メールアドレス",
+      "emailPlaceholder": "メールアドレスを入力してください",
+      "saveButton": "変更を保存"
+    },
+    "accountConnections": {
+      "title": "アカウント連携",
+      "description": "連携済みのアカウントを管理します。",
+      "googleConnected": "Google カレンダー接続済",
+      "googleConnect": "Google カレンダーを接続"
+    }
+  }
+}

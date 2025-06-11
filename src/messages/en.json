@@ -1,0 +1,51 @@
+{
+  "common": {
+    "deploy_now": "Deploy Now",
+    "get_started_by_editing": "Get started by editing",
+    "this_is_a_sample_client_component": "This is a sample client component",
+    "save_and_see_your_changes_instantly": "Save and see your changes instantly",
+    "read_our_docs": "Read our docs",
+    "toggle_theme": "Toggle theme",
+    "english": "English",
+    "japanese": "Japanese",
+    "french": "French",
+    "language": "Language",
+    "user": "User",
+    "users": "Users",
+    "settings": "Settings",
+    "help": "Help",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "dashboard": "Dashboard"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "resetPassword": "Reset Password",
+    "forgotPassword": "Forgot password?",
+    "hasAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "googleButton": "Sign in with Google"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": {
+      "title": "Profile",
+      "description": "Update your profile information.",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email",
+      "saveButton": "Save Changes"
+    },
+    "accountConnections": {
+      "title": "Account Connections",
+      "description": "Manage your connected accounts.",
+      "googleConnected": "Google Calendar Connected",
+      "googleConnect": "Connect Google Calendar"
+    }
+  }
+}
