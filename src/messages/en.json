@@ -45,8 +45,47 @@
     "accountConnections": {
       "title": "Account Connections",
       "description": "Manage your connected accounts.",
-      "googleConnected": "Google Calendar Connected",
-      "googleConnect": "Connect Google Calendar"
+      "googleConnected": "Connected",
+      "googleConnect": "Connect Google",
+      "googleDisconnect": "Disconnect",
+      "lineConnected": "Connected",
+      "lineConnect": "Connect LINE",
+      "lineDisconnect": "Disconnect"
+    },
+    "googleCalendar": {
+      "title": "Google Calendar Integration",
+      "description": "Connect your Google Calendar to sync events and schedules.",
+      "connect": "Connect Google Calendar",
+      "disconnect": "Disconnect",
+      "connected": "Connected",
+      "fetchingCalendars": "Fetching your calendars...",
+      "calendarsList": "Your Google Calendars:",
+      "error": "Error"
+    },
+    "lineMessaging": {
+      "title": "LINE Messaging API Integration",
+      "description": "Configure LINE Messaging API to send messages to LINE users.",
+      "channelIdLabel": "Channel ID",
+      "channelSecretLabel": "Channel Secret",
+      "channelAccessTokenLabel": "Channel Access Token",
+      "webhookUrlLabel": "Webhook URL (Optional)",
+      "save": "Save Configuration",
+      "delete": "Delete Configuration",
+      "saving": "Saving...",
+      "deleting": "Deleting...",
+      "saved": "Configuration saved successfully",
+      "deleted": "Configuration deleted successfully",
+      "error": "Error"
+    },
+    "lineUsers": {
+      "title": "LINE Users Management",
+      "description": "Manage LINE users who can receive messages from your bot.",
+      "addUser": "Add User",
+      "userIdLabel": "LINE User ID",
+      "loading": "Loading...",
+      "followers": "Followers",
+      "noUsers": "No users found. Add users manually or they will be added automatically when they follow your bot.",
+      "sendTestMessage": "Send Test"
     }
   }
 }

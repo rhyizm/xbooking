@@ -44,8 +44,47 @@
     "accountConnections": {
       "title": "Connexions de compte",
       "description": "Gérez vos comptes connectés.",
-      "googleConnected": "Calendrier Google connecté",
-      "googleConnect": "Connecter le calendrier Google"
+      "googleConnected": "Connecté",
+      "googleConnect": "Connecter Google",
+      "googleDisconnect": "Déconnecter",
+      "lineConnected": "Connecté",
+      "lineConnect": "Connecter LINE",
+      "lineDisconnect": "Déconnecter"
+    },
+    "googleCalendar": {
+      "title": "Intégration Google Calendar",
+      "description": "Connectez votre Google Calendar pour synchroniser les événements et les horaires.",
+      "connect": "Connecter Google Calendar",
+      "disconnect": "Déconnecter",
+      "connected": "Connecté",
+      "fetchingCalendars": "Récupération de vos calendriers...",
+      "calendarsList": "Vos calendriers Google :",
+      "error": "Erreur"
+    },
+    "lineMessaging": {
+      "title": "Intégration de l'API LINE Messaging",
+      "description": "Configurez l'API LINE Messaging pour envoyer des messages aux utilisateurs LINE.",
+      "channelIdLabel": "ID du canal",
+      "channelSecretLabel": "Secret du canal",
+      "channelAccessTokenLabel": "Jeton d'accès du canal",
+      "webhookUrlLabel": "URL du Webhook (Optionnel)",
+      "save": "Enregistrer la configuration",
+      "delete": "Supprimer la configuration",
+      "saving": "Enregistrement...",
+      "deleting": "Suppression...",
+      "saved": "Configuration enregistrée avec succès",
+      "deleted": "Configuration supprimée avec succès",
+      "error": "Erreur"
+    },
+    "lineUsers": {
+      "title": "Gestion des utilisateurs LINE",
+      "description": "Gérez les utilisateurs LINE qui peuvent recevoir des messages de votre bot.",
+      "addUser": "Ajouter un utilisateur",
+      "userIdLabel": "ID utilisateur LINE",
+      "loading": "Chargement...",
+      "followers": "Abonnés",
+      "noUsers": "Aucun utilisateur trouvé. Ajoutez des utilisateurs manuellement ou ils seront ajoutés automatiquement lorsqu'ils suivront votre bot.",
+      "sendTestMessage": "Envoyer un test"
     }
   }
 }

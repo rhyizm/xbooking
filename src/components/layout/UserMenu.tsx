@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useUser, useClerk } from '@clerk/nextjs';
 import { useTranslations } from 'next-intl';
@@ -65,9 +66,11 @@ export default function UserMenu() {
             aria-haspopup="true"
           >
             {user.imageUrl ? (
-              <img
+              <Image
                 src={user.imageUrl}
                 alt={user.fullName || t('common.user')}
+                width={32}
+                height={32}
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -81,9 +84,11 @@ export default function UserMenu() {
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-10 ring-1 ring-black ring-opacity-5">
               <div className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700">
                 {user.imageUrl && (
-                  <img
+                  <Image
                     src={user.imageUrl}
                     alt={user.fullName || t('common.user')}
+                    width={24}
+                    height={24}
                     className="h-6 w-6 rounded-full mr-2 object-cover"
                   />
                 )}

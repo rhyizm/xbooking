@@ -45,8 +45,47 @@
     "accountConnections": {
       "title": "アカウント連携",
       "description": "連携済みのアカウントを管理します。",
-      "googleConnected": "Google カレンダー接続済",
-      "googleConnect": "Google カレンダーを接続"
+      "googleConnected": "連携済み",
+      "googleConnect": "Googleを連携",
+      "googleDisconnect": "連携解除",
+      "lineConnected": "連携済み",
+      "lineConnect": "LINEを連携",
+      "lineDisconnect": "連携解除"
+    },
+    "googleCalendar": {
+      "title": "Googleカレンダー連携",
+      "description": "Googleカレンダーを連携してイベントやスケジュールを同期します。",
+      "connect": "Googleカレンダーを連携",
+      "disconnect": "連携解除",
+      "connected": "連携済み",
+      "fetchingCalendars": "カレンダーを取得中...",
+      "calendarsList": "あなたのGoogleカレンダー:",
+      "error": "エラー"
+    },
+    "lineMessaging": {
+      "title": "LINE Messaging API連携",
+      "description": "LINE Messaging APIを設定してLINEユーザーにメッセージを送信します。",
+      "channelIdLabel": "チャンネルID",
+      "channelSecretLabel": "チャンネルシークレット",
+      "channelAccessTokenLabel": "チャンネルアクセストークン",
+      "webhookUrlLabel": "Webhook URL（オプション）",
+      "save": "設定を保存",
+      "delete": "設定を削除",
+      "saving": "保存中...",
+      "deleting": "削除中...",
+      "saved": "設定を保存しました",
+      "deleted": "設定を削除しました",
+      "error": "エラー"
+    },
+    "lineUsers": {
+      "title": "LINEユーザー管理",
+      "description": "ボットからメッセージを受け取ることができるLINEユーザーを管理します。",
+      "addUser": "ユーザー追加",
+      "userIdLabel": "LINEユーザーID",
+      "loading": "読み込み中...",
+      "followers": "フォロワー",
+      "noUsers": "ユーザーが見つかりません。手動で追加するか、ボットをフォローしてもらうと自動で追加されます。",
+      "sendTestMessage": "テスト送信"
     }
   }
 }

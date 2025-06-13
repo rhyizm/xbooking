@@ -2,6 +2,9 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server'; // Use getTranslations for Server Components
 import { auth } from "@clerk/nextjs/server"; // Use Clerk server-side auth
 import AccountConnections from "@/components/settings/AccountConnections";
+import GoogleCalendarIntegration from "@/components/settings/GoogleCalendarIntegration";
+import LineMessagingIntegration from "@/components/settings/LineMessagingIntegration";
+import LineUserManager from "@/components/settings/LineUserManager";
 import { SettingsCard } from '@/components/settings/SettingsCard';
 
 export default async function SettingsPage() {
@@ -67,6 +70,48 @@ export default async function SettingsPage() {
         description={t('accountConnections.description')}
         googleConnectedText={t('accountConnections.googleConnected')}
         googleConnectText={t('accountConnections.googleConnect')}
+        googleDisconnectText={t('accountConnections.googleDisconnect')}
+        lineConnectedText={t('accountConnections.lineConnected')}
+        lineConnectText={t('accountConnections.lineConnect')}
+        lineDisconnectText={t('accountConnections.lineDisconnect')}
+      />
+
+      <GoogleCalendarIntegration
+        title={t('googleCalendar.title')}
+        description={t('googleCalendar.description')}
+        connectText={t('googleCalendar.connect')}
+        disconnectText={t('googleCalendar.disconnect')}
+        connectedText={t('googleCalendar.connected')}
+        fetchingCalendarsText={t('googleCalendar.fetchingCalendars')}
+        calendarsListText={t('googleCalendar.calendarsList')}
+        errorText={t('googleCalendar.error')}
+      />
+
+      <LineMessagingIntegration
+        title={t('lineMessaging.title')}
+        description={t('lineMessaging.description')}
+        channelIdLabel={t('lineMessaging.channelIdLabel')}
+        channelSecretLabel={t('lineMessaging.channelSecretLabel')}
+        channelAccessTokenLabel={t('lineMessaging.channelAccessTokenLabel')}
+        webhookUrlLabel={t('lineMessaging.webhookUrlLabel')}
+        saveText={t('lineMessaging.save')}
+        deleteText={t('lineMessaging.delete')}
+        savingText={t('lineMessaging.saving')}
+        deletingText={t('lineMessaging.deleting')}
+        savedText={t('lineMessaging.saved')}
+        deletedText={t('lineMessaging.deleted')}
+        errorText={t('lineMessaging.error')}
+      />
+
+      <LineUserManager
+        title={t('lineUsers.title')}
+        description={t('lineUsers.description')}
+        addUserText={t('lineUsers.addUser')}
+        userIdLabel={t('lineUsers.userIdLabel')}
+        loadingText={t('lineUsers.loading')}
+        followersText={t('lineUsers.followers')}
+        noUsersText={t('lineUsers.noUsers')}
+        sendTestMessageText={t('lineUsers.sendTestMessage')}
       />
     </div>
   );
