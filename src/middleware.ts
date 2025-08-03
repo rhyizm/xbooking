@@ -20,6 +20,11 @@ const isPublicRoute = createRouteMatcher([
   '/api/dummy(.*)'
 ]);
 
+// 認証が必要だがi18nを適用しないAPIルート
+const isAuthenticatedApiRoute = createRouteMatcher([
+  '/api/stripe(.*)'
+]);
+
 // i18nとClerkを組み合わせたミドルウェア
 export default clerkMiddleware(async (auth, req: NextRequest) => {
   const pathname = req.nextUrl.pathname;
@@ -46,6 +51,16 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     const locale = pathnameHasLocale ? pathname.split('/')[1] : defaultLocale;
     url.pathname = locale === defaultLocale ? '/dashboard' : `/${locale}/dashboard`;
     return Response.redirect(url);
+  }
+  
+  // APIルートの場合、i18nを適用しない
+  if (pathname.startsWith('/api/')) {
+    // 認証が必要なAPIルートの場合
+    if (isAuthenticatedApiRoute(req) && !userId) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+    // APIルートはi18nミドルウェアをスキップ
+    return;
   }
   
   // 公開ルートでない場合は認証を要求

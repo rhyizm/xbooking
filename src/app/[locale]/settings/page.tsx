@@ -5,6 +5,7 @@ import AccountConnections from "@/components/settings/AccountConnections";
 import GoogleCalendarIntegration from "@/components/settings/GoogleCalendarIntegration";
 import LineMessagingIntegration from "@/components/settings/LineMessagingIntegration";
 import LineUserManager from "@/components/settings/LineUserManager";
+import StripeConnectIntegration from "@/components/settings/StripeConnectIntegration";
 import { SettingsCard } from '@/components/settings/SettingsCard';
 
 export default async function SettingsPage() {
@@ -64,6 +65,8 @@ export default async function SettingsPage() {
         onSubmit={handleProfileSubmit}
         submitButtonText={t('profile.saveButton')} // Pass translated button text
       />
+
+      <StripeConnectIntegration />
 
       <AccountConnections
         title={t('accountConnections.title')}
