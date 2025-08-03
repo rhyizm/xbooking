@@ -65,7 +65,7 @@ export default function LanguageSelector() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        className="flex items-center space-x-2 px-3 py-2 rounded-lg border-2 border-bg-foreground hover:bg-foreground/10 transition-colors"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -98,7 +98,7 @@ export default function LanguageSelector() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
+        <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-zinc-800 ring-1 ring-black ring-opacity-5 z-50">
           <div className="py-1" role="menu" aria-orientation="vertical">
             {locales.map((locale) => ( // Use the defined locales array
               <button

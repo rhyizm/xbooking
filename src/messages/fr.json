@@ -85,6 +85,14 @@
       "followers": "Abonnés",
       "noUsers": "Aucun utilisateur trouvé. Ajoutez des utilisateurs manuellement ou ils seront ajoutés automatiquement lorsqu'ils suivront votre bot.",
       "sendTestMessage": "Envoyer un test"
+    },
+    "appearance": {
+      "title": "Apparence",
+      "description": "Personnalisez l'apparence de l'application.",
+      "themeLabel": "Thème",
+      "themeDescription": "Sélectionnez votre thème de couleur préféré.",
+      "languageLabel": "Langue",
+      "languageDescription": "Choisissez votre langue préférée pour l'interface."
     }
   }
 }

@@ -86,6 +86,14 @@
       "followers": "Followers",
       "noUsers": "No users found. Add users manually or they will be added automatically when they follow your bot.",
       "sendTestMessage": "Send Test"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Customize the appearance of the application.",
+      "themeLabel": "Theme",
+      "themeDescription": "Select your preferred color theme.",
+      "languageLabel": "Language",
+      "languageDescription": "Choose your preferred language for the interface."
     }
   }
 }

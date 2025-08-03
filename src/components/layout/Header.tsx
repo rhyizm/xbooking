@@ -3,8 +3,6 @@
 import React from 'react';
 import { Coins, Menu } from 'lucide-react';
 import HeaderBrand from './HeaderBrand';
-import LanguageSelector from "@/components/i18n/LanguageSelector";
-import ThemeToggle from "@/components/theme/ThemeToggle";
 import UserMenu from './UserMenu';
 import { useMobileSidebar } from './MobileSidebarContext';
 
@@ -35,13 +33,7 @@ const Header: React.FC<HeaderProps> = ({ credits }) => {
             <span>{credits}</span>
           </div>
         )}
-        <div className="flex items-center space-x-4">
-          <ThemeToggle />
-          <LanguageSelector />
-        </div>
-        <div className="ml-5">
-          <UserMenu />
-        </div>
+        <UserMenu />
       </div>
     </header>
   );
