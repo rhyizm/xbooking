@@ -3,20 +3,13 @@ import {notFound} from 'next/navigation';
 import { Geist, Geist_Mono } from 'next/font/google';
 import '../globals.css';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages } from 'next-intl/server';
 import { ClerkProvider } from '@clerk/nextjs';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
-import { Content, Header, Sidebar, Wrapper } from '@/components/layout';
+import { Content, Header, Wrapper } from '@/components/layout';
 import { MobileSidebarProvider } from '@/components/layout/MobileSidebarContext';
-import type { SidebarItem } from '@/components/layout/Sidebar';
-import {
-  Home,
-  User,
-  Settings,
-  HelpCircle,
-  LayoutDashboard,
-} from "lucide-react";
 import {routing} from '@/i18n/routing';
+import DynamicSidebar from '@/components/layout/DynamicSidebar';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,36 +40,6 @@ export default async function RootLayout({
 
   const messages = await getMessages();
 
-  const t = await getTranslations({ locale: locale, namespace: 'common' });
-
-  const sidebarItems: SidebarItem[] = [
-    {
-      name: t('home'),
-      href: '/',
-      icon: <Home className="h-5 w-5" />,
-    },
-    {
-      name: t('dashboard'),
-      href: '/dashboard',
-      icon: <LayoutDashboard className="h-5 w-5" />,
-    },
-    {
-      name: t('users'),
-      href: '/users',
-      icon: <User className="h-5 w-5" />,
-    },
-    {
-      name: t('settings'),
-      href: '/settings',
-      icon: <Settings className="h-5 w-5" />,
-    },
-    {
-      name: t('help'),
-      href: '/help',
-      icon: <HelpCircle className="h-5 w-5" />,
-    },
-  ];
-
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
@@ -87,7 +50,7 @@ export default async function RootLayout({
             <ThemeProvider>
               <MobileSidebarProvider>
                 <Wrapper>
-                  <Sidebar sidebarItems={sidebarItems} />
+                  <DynamicSidebar />
                   <Content>
                     <Header />
                     {children}

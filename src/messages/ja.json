@@ -17,7 +17,18 @@
     "help": "ヘルプ",
     "privacyPolicy": "プライバシーポリシー",
     "termsOfUse": "利用規約",
-    "dashboard": "ダッシュボード"
+    "dashboard": "ダッシュボード",
+    "organization": "組織"
+  },
+  "organization": {
+    "title": "組織",
+    "description": "組織とチームメンバーを管理",
+    "createOrganization": "組織を作成",
+    "yourOrganizations": "あなたの組織",
+    "manageYourOrganizations": "組織を選択してメンバーと設定を管理",
+    "createNewOrganization": "新しい組織を作成",
+    "createOrganizationDescription": "ビジネスまたはチームのための新しい組織を設定",
+    "cancel": "キャンセル"
   },
   "auth": {
     "signIn": "サインイン",

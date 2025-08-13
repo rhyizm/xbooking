@@ -17,7 +17,8 @@
     "help": "Help",
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "organization": "Organization"
   },
   "auth": {
     "signIn": "Sign In",
@@ -30,6 +31,16 @@
     "hasAccount": "Already have an account?",
     "noAccount": "Don't have an account?",
     "googleButton": "Sign in with Google"
+  },
+  "organization": {
+    "title": "Organizations",
+    "description": "Manage your organizations and team members",
+    "createOrganization": "Create Organization",
+    "yourOrganizations": "Your Organizations",
+    "manageYourOrganizations": "Select an organization to manage members and settings",
+    "createNewOrganization": "Create New Organization",
+    "createOrganizationDescription": "Set up a new organization for your business or team",
+    "cancel": "Cancel"
   },
   "settings": {
     "title": "Settings",

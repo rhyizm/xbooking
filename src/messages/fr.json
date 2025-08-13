@@ -1,5 +1,6 @@
 {
   "common": {
+    "home": "Accueil",
     "deploy_now": "Déployer maintenant",
     "get_started_by_editing": "Commencez par modifier",
     "this_is_a_sample_client_component": "Ceci est un exemple de composant client",
@@ -16,7 +17,18 @@
     "help": "Aide",
     "privacyPolicy": "Politique de confidentialité",
     "termsOfUse": "Conditions d'utilisation",
-    "dashboard": "Tableau de bord"
+    "dashboard": "Tableau de bord",
+    "organization": "Organisation"
+  },
+  "organization": {
+    "title": "Organisations",
+    "description": "Gérez vos organisations et les membres de l'équipe",
+    "createOrganization": "Créer une organisation",
+    "yourOrganizations": "Vos organisations",
+    "manageYourOrganizations": "Sélectionnez une organisation pour gérer les membres et les paramètres",
+    "createNewOrganization": "Créer une nouvelle organisation",
+    "createOrganizationDescription": "Créez une nouvelle organisation pour votre entreprise ou votre équipe",
+    "cancel": "Annuler"
   },
   "auth": {
     "signIn": "Se connecter",
