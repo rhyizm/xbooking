@@ -14,8 +14,11 @@ import {
 } from "lucide-react";
 
 export default function DynamicSidebar() {
-  const { user } = useUser();
+  const { user, isSignedIn } = useUser();
   const t = useTranslations('common');
+  
+  // Defensive guard: if used outside <SignedIn>, avoid rendering
+  if (!isSignedIn) return null;
   
   const baseItems: SidebarItem[] = [
     {

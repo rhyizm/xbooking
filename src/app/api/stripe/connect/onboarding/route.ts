@@ -5,6 +5,19 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 import StripeAccount from '@/models/StripeAccount';
 import dbConnect from '@/lib/mongodb';
 import stripe from "@/lib/stripe/server";
+import { routing } from '@/i18n/routing';
+
+function detectLocale(req: NextRequest): string {
+  const referer = req.headers.get('referer') || '';
+  try {
+    const url = new URL(referer);
+    const [, maybeLocale] = url.pathname.split('/');
+    if (routing.locales.includes(maybeLocale as (typeof routing.locales)[number])) {
+      return maybeLocale as string;
+    }
+  } catch {}
+  return routing.defaultLocale;
+}
 
 /**
  * Stripe Connect オンボーディング用の AccountLink を発行する。
@@ -56,10 +69,11 @@ export async function POST(req: NextRequest) {
     }
 
     // オンボーディング用のAccountLinkを作成
+    const locale = detectLocale(req);
     const accountLink = await stripe.accountLinks.create({
       account: stripeAccount.stripeAccountId,
-      refresh_url: `${process.env.NEXT_PUBLIC_BASE_URL}/settings?stripe_refresh=true`,
-      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/settings?stripe_onboarding=complete`,
+      refresh_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/settings?stripe_refresh=true`,
+      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/settings?stripe_onboarding=complete`,
       type: 'account_onboarding',
     });
 

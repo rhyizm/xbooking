@@ -12,6 +12,52 @@ Next.js 15、Clerk認証、MongoDB/Mongoose、Googleカレンダー、LINE Messa
 
 ---
 
+## E2E テスト（Clerk サインイン・トークン）
+
+Playwright で UI を介さずに Clerk にログインし、ストレージ状態を使い回す方式を採用しています。
+
+- テスト配置: `e2e/`
+- 設定: `playwright.config.ts`（`globalSetup` でサインイン・トークンを利用したログインを実行）
+- ストレージ状態: `tmp/playwright/state/auth.json`
+
+### 事前準備（あなたがやること）
+
+1) Clerk でテストユーザーを作成し、そのユーザーの ID を控える（2FA は無効推奨）。
+
+2) 環境変数を準備（ローカル実行時の例）
+```bash
+export CLERK_SECRET_KEY=sk_...            # Clerk 管理APIキー（機密）
+export CLERK_TEST_USER_ID=user_...        # 1) で控えたユーザーID
+export E2E_BASE_URL=http://localhost:3999 # このアプリは dev で 3999 ポート
+# 任意: export E2E_LOCALE=ja             # 既定は 'en'
+```
+
+3) Playwright をインストール
+```bash
+pnpm add -D @playwright/test
+pnpm exec playwright install
+```
+
+4) アプリを起動（別ターミナル）
+```bash
+pnpm dev  # http://localhost:3999
+```
+
+5) E2E テストを実行
+```bash
+pnpm test:e2e
+# headed で動かす場合
+pnpm test:e2e:headed
+```
+
+グローバルセットアップ（`e2e/global-setup.ts`）は Clerk 管理APIでサインイン・トークンを発行し、
+`/signin?sign_in_token=...`（ロケール指定時は `/{locale}/signin?...`）へ遷移してセッションを確立、
+その `storageState` を `tmp/playwright/state/auth.json` に保存します。各テストはこの状態を再利用します。
+
+CI でも同様に、`CLERK_SECRET_KEY` と `CLERK_TEST_USER_ID` をシークレットとして注入してください。
+
+---
+
 ## アポハブ ユーザー登録およびオンボーディングフロー仕様
 
 従来のユーザー登録・オンボーディングフローに加えて、新しくGoogleカレンダー連携とLINE Messaging機能を追加しました。

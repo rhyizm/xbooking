@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { useUser, useClerk } from '@clerk/nextjs';
+import { useUser, useClerk, SignOutButton } from '@clerk/nextjs';
 import { useTranslations } from 'next-intl';
 
 export default function UserMenu() {
@@ -51,7 +51,7 @@ export default function UserMenu() {
 
   const handleSignOut = async () => {
     setLoading(true);
-    await signOut(() => router.push('/'));
+    await signOut({ redirectUrl: '/' });
   };
 
   return (
@@ -101,12 +101,14 @@ export default function UserMenu() {
               >
                 {t('common.settings')}
               </Link>
-              <button
-                onClick={() => { setIsDropdownOpen(false); handleSignOut(); }}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                {t('auth.signOut')}
-              </button>
+              <SignOutButton redirectUrl="/signin">
+                <button
+                  onClick={() => setIsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  {t('auth.signOut')}
+                </button>
+              </SignOutButton>
             </div>
           )}
         </div>

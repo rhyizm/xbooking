@@ -1,13 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { CalendarTokenService } from '@/services/calendar-token-service';
+import { routing } from '@/i18n/routing';
+
+function detectLocale(request: NextRequest): string {
+  const referer = request.headers.get('referer') || '';
+  try {
+    const url = new URL(referer);
+    const [, maybeLocale] = url.pathname.split('/');
+    if (routing.locales.includes(maybeLocale as (typeof routing.locales)[number])) {
+      return maybeLocale as string;
+    }
+  } catch {}
+  return routing.defaultLocale;
+}
 
 export async function GET(request: NextRequest) {
   try {
     const { userId } = await auth();
+    const locale = detectLocale(request);
     
     if (!userId) {
-      return NextResponse.redirect(new URL('/signin', request.url));
+      return NextResponse.redirect(new URL(`/${locale}/signin`, request.url));
     }
 
     const searchParams = request.nextUrl.searchParams;
@@ -17,13 +31,13 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.redirect(
-        new URL(`/settings?error=${encodeURIComponent(error)}`, request.url)
+        new URL(`/${locale}/settings?error=${encodeURIComponent(error)}`, request.url)
       );
     }
 
     if (!code || !state) {
       return NextResponse.redirect(
-        new URL('/settings?error=missing_parameters', request.url)
+        new URL(`/${locale}/settings?error=missing_parameters`, request.url)
       );
     }
 
@@ -31,13 +45,13 @@ export async function GET(request: NextRequest) {
     await CalendarTokenService.saveTokensFromCode(state, code);
     
     return NextResponse.redirect(
-      new URL('/settings?success=google_connected', request.url)
+      new URL(`/${locale}/settings?success=google_connected`, request.url)
     );
   } catch (error) {
     console.error('Google OAuth callback error:', error);
     
     return NextResponse.redirect(
-      new URL('/settings?error=connection_failed', request.url)
+      new URL(`/${locale}/settings?error=connection_failed`, request.url)
     );
   }
 }

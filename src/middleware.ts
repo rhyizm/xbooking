@@ -4,7 +4,7 @@ import { NextRequest } from 'next/server';
 
 // i18n 設定
 const locales = ['en', 'ja', 'fr'] as const;
-const defaultLocale = 'en';
+const defaultLocale = 'ja';
 
 const intlMiddleware = createMiddleware({
   locales,
@@ -17,12 +17,22 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/signin(.*)', 
   '/signup(.*)',
-  '/api/dummy(.*)'
+  '/api/dummy(.*)',
+  // LIFF pages should be accessible without forcing sign-in
+  '/liff(.*)',
+  '/line/liff(.*)',
+  // SSO callback page should be public as well
+  '/sso-callback(.*)'
 ]);
 
 // 認証が必要だがi18nを適用しないAPIルート
 const isAuthenticatedApiRoute = createRouteMatcher([
   '/api/stripe(.*)'
+]);
+
+// Routes that should not trigger i18n locale redirects/handling
+const isNoLocaleRoute = createRouteMatcher([
+  '/sso-callback(.*)'
 ]);
 
 // i18nとClerkを組み合わせたミドルウェア
@@ -60,6 +70,11 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
       return new Response('Unauthorized', { status: 401 });
     }
     // APIルートはi18nミドルウェアをスキップ
+    return;
+  }
+
+  // LIFFやSSOコールバックはロケールリダイレクトを行わない
+  if (isNoLocaleRoute({ nextUrl: { pathname: pathWithoutLocale } } as Parameters<typeof isNoLocaleRoute>[0])) {
     return;
   }
   

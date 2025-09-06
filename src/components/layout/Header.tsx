@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ credits }) => {
   const { toggle } = useMobileSidebar();
 
   return (
-    <header className="sticky top-0 z-30 bg-background border-b border-border px-4 py-2">
+    <header className="sticky top-0 z-30 bg-background border-b border-border px-4">
       <div className="container mx-auto flex justify-start items-center">
         <button
           onClick={toggle}
