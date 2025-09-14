@@ -1,6 +1,6 @@
 // src/app/api/clerk/organizations/[organizationId]/route.ts
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
 
 type UpdateOrganizationBody = {
@@ -25,9 +25,10 @@ type UpdateOrganizationBody = {
  * - 500: unexpected error
  */
 export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { organizationId: string } }
+  req: Request,
+  context: unknown
 ) {
+  const { params } = (context as { params: { organizationId: string } }) ?? { params: { organizationId: '' } };
   const organizationId = params.organizationId;
 
   try {
@@ -41,8 +42,10 @@ export async function PATCH(
     // Ensure the organization exists (and fetch basic details)
     try {
       await client.organizations.getOrganization({ organizationId });
-    } catch (err: any) {
-      const code = err?.errors?.[0]?.code as string | undefined;
+    } catch (err: unknown) {
+      type ClerkAPIError = { errors?: { code?: string; message?: string }[]; message?: string };
+      const e = err as ClerkAPIError;
+      const code = e?.errors?.[0]?.code as string | undefined;
       if (code === 'resource_not_found') {
         return NextResponse.json({ error: 'Organization not found' }, { status: 404 });
       }
@@ -111,9 +114,11 @@ export async function PATCH(
         name: updated.name,
         slug: updated.slug,
       });
-    } catch (err: any) {
-      const message = err?.errors?.[0]?.message || err?.message || 'Failed to update organization';
-      const code = err?.errors?.[0]?.code as string | undefined;
+    } catch (err: unknown) {
+      type ClerkAPIError = { errors?: { code?: string; message?: string }[]; message?: string };
+      const e = err as ClerkAPIError;
+      const message = e?.errors?.[0]?.message || e?.message || 'Failed to update organization';
+      const code = e?.errors?.[0]?.code as string | undefined;
       if (code === 'form_param_format_invalid' || code === 'form_identifier_not_allowed') {
         return NextResponse.json({ error: message }, { status: 400 });
       }

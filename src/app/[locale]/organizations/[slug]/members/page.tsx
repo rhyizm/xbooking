@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 
-export const OrgMembersParams = {
+const OrgMembersParams = {
   memberships: {
     pageSize: 10,
     keepPreviousData: true,
@@ -57,7 +57,7 @@ export default function OrganizationMembersPage() {
         setRolesCache(res.data.map((r) => r.key as OrganizationCustomRoleKey));
       })
       .catch(console.error);
-  }, [organization?.id]);
+  }, [organization]);
 
   /* ▼ 権限制御 -------------------------------------- */
   const canManageMembers = currentMembership?.role === 'org:admin';

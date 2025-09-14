@@ -21,7 +21,7 @@ export default function StripeConnectIntegration() {
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [accountType, setAccountType] = useState<'express' | 'standard'>('express');
+  const [accountType] = useState<'express' | 'standard'>('express');
   
   const isMerchant = user?.unsafeMetadata?.role === 'merchant';
 

@@ -3,6 +3,18 @@ import { headers } from 'next/headers';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import { clerkClient } from '@clerk/nextjs/server';
 
+type ExternalAccount = { provider?: string };
+type EmailAddress = { email_address?: string };
+type UserCreatedEventData = {
+  id: string;
+  email_addresses?: EmailAddress[];
+  first_name?: string | null;
+  last_name?: string | null;
+  unsafe_metadata?: Record<string, unknown> & { role?: string };
+  external_accounts?: ExternalAccount[];
+  private_metadata?: Record<string, unknown> & { attribute?: string };
+};
+
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
@@ -44,12 +56,27 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    const { id, email_addresses, first_name, last_name, unsafe_metadata } = evt.data;
-    
+    const data = evt.data as unknown as UserCreatedEventData;
+    const { id, email_addresses, first_name, last_name, unsafe_metadata, external_accounts, private_metadata } = data;
+
+    // Tag LINE SSO signups as customers using webhook payload (no Admin API fetch, no duplicate-check)
+    try {
+      const hasLine = Array.isArray(external_accounts) && external_accounts.some((a: ExternalAccount) => a?.provider === 'oauth_line');
+      if (hasLine) {
+        const client = await clerkClient();
+        await client.users.updateUser(id, {
+          privateMetadata: { ...(private_metadata || {}), attribute: 'customer' },
+        });
+        console.log(`Tagged LINE signup as customer: ${id}`);
+      }
+    } catch (error) {
+      console.error('Error tagging user on user.created:', error);
+    }
+
     if (unsafe_metadata?.role === 'merchant') {
       try {
         const orgName = `${first_name || ''} ${last_name || ''}`.trim() || 
-                       email_addresses[0]?.email_address?.split('@')[0] || 
+                       email_addresses?.[0]?.email_address?.split('@')[0] || 
                        'My Organization';
         
         const client = await clerkClient();

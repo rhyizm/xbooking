@@ -78,8 +78,10 @@ export async function POST(req: NextRequest) {
       );
     } catch (err: unknown) {
       // Attempt to map Clerk validation errors to 409/400
-      const message = (err as any)?.errors?.[0]?.message || (err as any)?.message || 'Failed to create organization';
-      const code = (err as any)?.errors?.[0]?.code as string | undefined;
+      type ClerkAPIError = { errors?: { code?: string; message?: string }[]; message?: string };
+      const e = err as ClerkAPIError;
+      const message = e?.errors?.[0]?.message || e?.message || 'Failed to create organization';
+      const code = e?.errors?.[0]?.code as string | undefined;
       if (code === 'form_param_format_invalid' || code === 'form_identifier_not_allowed') {
         return NextResponse.json({ error: message }, { status: 400 });
       }
@@ -94,4 +96,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
-

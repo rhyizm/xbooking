@@ -1,7 +1,6 @@
 // app/organizations/[slug]/settings/page.tsx
 
 import { redirect } from 'next/navigation';
-import { OrganizationProfile } from '@clerk/nextjs'
 import { auth, clerkClient } from '@clerk/nextjs/server';
 import OrganizationSettings from "@/components/organization/OrganizationSettings";
 
@@ -39,11 +38,6 @@ export default async function OrganizationSettingsPage({
     // 管理者でない場合はアクセス拒否
     return <div>アクセス権限がありません</div>;
   }
-
-  // 組織情報を取得
-  const organization = await clerk.organizations.getOrganization({
-    slug: slug
-  });
 
   return (
     <div className="max-w-xl mx-auto py-10">

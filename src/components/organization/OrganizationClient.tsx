@@ -8,7 +8,7 @@ import {
 } from '@clerk/nextjs';
 import { dark } from "@clerk/themes";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building2, Plus } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 
 export default function OrganizationClient() {
   const t = useTranslations('organization');

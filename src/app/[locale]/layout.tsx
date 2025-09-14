@@ -8,7 +8,7 @@ import { Content, Header, Wrapper } from '@/components/layout';
 import { MobileSidebarProvider } from '@/components/layout/MobileSidebarContext';
 import {routing} from '@/i18n/routing';
 import DynamicSidebar from '@/components/layout/DynamicSidebar';
-import { enUS, jaJP } from "@clerk/localizations";
+// ClerkProvider is provided at the root; localization is configured there.
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,7 +29,7 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  const clerkLocalization = locale === 'ja' ? jaJP : enUS;
+  // Clerk localization is handled in the root layout based on NEXT_LOCALE cookie.
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>

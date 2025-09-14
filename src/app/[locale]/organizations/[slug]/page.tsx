@@ -2,14 +2,15 @@
 "use client";
 
 import { useOrganization } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Settings, UserPlus, Users, BarChart3 } from 'lucide-react';
+import { Settings, UserPlus, Users } from 'lucide-react';
 
-export default function OrganizationPage({ params }: { params: { slug: string } }) {
+export default function OrganizationPage() {
   const { organization, isLoaded } = useOrganization();
   const router = useRouter();
+  const { slug } = useParams() as { slug: string };
 
   if (!isLoaded) {
     return <div>読み込み中...</div>;
@@ -39,7 +40,7 @@ export default function OrganizationPage({ params }: { params: { slug: string } 
               組織の基本情報や設定を管理
             </p>
             <Button 
-              onClick={() => router.push(`/organizations/${params.slug}/settings`)}
+              onClick={() => router.push(`/organizations/${slug}/settings`)}
               className="w-full"
             >
               設定を開く
@@ -59,7 +60,7 @@ export default function OrganizationPage({ params }: { params: { slug: string } 
               新しいメンバーを組織に招待
             </p>
             <Button 
-              onClick={() => router.push(`/organizations/${params.slug}/members`)}
+              onClick={() => router.push(`/organizations/${slug}/members`)}
               className="w-full"
             >
               メンバー管理
@@ -79,7 +80,7 @@ export default function OrganizationPage({ params }: { params: { slug: string } 
               現在のメンバーを確認・管理
             </p>
             <Button 
-              onClick={() => router.push(`/organizations/${params.slug}/members`)}
+              onClick={() => router.push(`/organizations/${slug}/members`)}
               variant="outline"
               className="w-full"
             >

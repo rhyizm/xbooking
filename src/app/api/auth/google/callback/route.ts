@@ -16,9 +16,9 @@ function detectLocale(request: NextRequest): string {
 }
 
 export async function GET(request: NextRequest) {
+  const locale = detectLocale(request);
   try {
     const { userId } = await auth();
-    const locale = detectLocale(request);
     
     if (!userId) {
       return NextResponse.redirect(new URL(`/${locale}/signin`, request.url));

@@ -20,16 +20,17 @@ export const metadata: Metadata = {
   description: 'Scheduling app',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieLocale = cookies().get('NEXT_LOCALE')?.value;
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value;
   const locale = cookieLocale === 'ja' || cookieLocale === 'fr' || cookieLocale === 'en' ? cookieLocale : 'ja';
   const clerkLocalization = locale === 'ja' ? jaJP : locale === 'fr' ? frFR : enUS;
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ClerkProvider localization={clerkLocalization}>
           {children}

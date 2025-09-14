@@ -3,20 +3,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
-import { useUser, useClerk, SignOutButton } from '@clerk/nextjs';
+import { usePathname } from 'next/navigation';
+import { useUser, SignOutButton } from '@clerk/nextjs';
 import { useTranslations } from 'next-intl';
 
 export default function UserMenu() {
   const t = useTranslations();
   const { user, isLoaded } = useUser();
-  const { signOut } = useClerk();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const iconButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     setLoading(false);
@@ -49,10 +47,7 @@ export default function UserMenu() {
     return null;
   }
 
-  const handleSignOut = async () => {
-    setLoading(true);
-    await signOut({ redirectUrl: '/' });
-  };
+  // SignOut handled by <SignOutButton />
 
   return (
     <>

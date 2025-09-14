@@ -20,9 +20,13 @@ const isPublicRoute = createRouteMatcher([
   '/api/dummy(.*)',
   // LIFF pages should be accessible without forcing sign-in
   '/liff(.*)',
-  '/line/liff(.*)',
-  // SSO callback page should be public as well
-  '/sso-callback(.*)'
+  '/line',
+  '/line/callback',
+  // Accept Clerk invitation tickets without prior auth
+  '/accept-invitation',
+  // Our own shareable invite links (pre-auth allowed)
+  '/organizations(.*)/invites(.*)',
+  // SSO callback page removed
 ]);
 
 // 認証が必要だがi18nを適用しないAPIルート
@@ -32,7 +36,9 @@ const isAuthenticatedApiRoute = createRouteMatcher([
 
 // Routes that should not trigger i18n locale redirects/handling
 const isNoLocaleRoute = createRouteMatcher([
-  '/sso-callback(.*)'
+  '/liff(.*)',
+  '/line',
+  '/line/callback'
 ]);
 
 // i18nとClerkを組み合わせたミドルウェア
