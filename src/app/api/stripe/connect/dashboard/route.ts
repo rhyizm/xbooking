@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import StripeAccount from '@/models/StripeAccount';
-import dbConnect from '@/lib/mongodb';
-import stripe from "@/lib/stripe/server";
+import getStripeClient from '@/lib/stripe/server';
+import { readStripeAccountId } from '@/services/stripe-connect-store';
 
 export async function POST() {
   try {
@@ -20,18 +19,21 @@ export async function POST() {
       }, { status: 403 });
     }
 
-    await dbConnect();
+    const stripeAccountId = await readStripeAccountId(userId);
 
-    const stripeAccount = await StripeAccount.findOne({ ownerId: userId });
-    
-    if (!stripeAccount) {
+    if (!stripeAccountId) {
       return NextResponse.json({ 
         error: 'Stripe account not found. Please create an account first.' 
       }, { status: 404 });
     }
 
     // Express Dashboardへのログインリンクを作成
-    const loginLink = await stripe.accounts.createLoginLink(stripeAccount.stripeAccountId);
+    const stripe = getStripeClient();
+    if (!stripe) {
+      return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 });
+    }
+
+    const loginLink = await stripe.accounts.createLoginLink(stripeAccountId);
 
     return NextResponse.json({
       url: loginLink.url,

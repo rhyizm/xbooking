@@ -18,7 +18,11 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
     "dashboard": "Dashboard",
-    "organization": "Organization"
+    "organization": "Organization",
+    "products": "Products"
+  },
+  "products": {
+    "title": "Products & Prices"
   },
   "auth": {
     "signIn": "Sign In",

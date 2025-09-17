@@ -1,11 +1,8 @@
-// src/app/api/stripe/connect/onboarding/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import StripeAccount from '@/models/StripeAccount';
-import dbConnect from '@/lib/mongodb';
-import stripe from "@/lib/stripe/server";
 import { routing } from '@/i18n/routing';
+import getStripeClient from '@/lib/stripe/server';
+import { readStripeAccountId } from '@/services/stripe-connect-store';
 
 function detectLocale(req: NextRequest): string {
   const referer = req.headers.get('referer') || '';
@@ -15,77 +12,56 @@ function detectLocale(req: NextRequest): string {
     if (routing.locales.includes(maybeLocale as (typeof routing.locales)[number])) {
       return maybeLocale as string;
     }
-  } catch {}
+  } catch {
+    // ignore parse errors, fall back below
+  }
   return routing.defaultLocale;
 }
 
-/**
- * Stripe Connect オンボーディング用の AccountLink を発行する。
- *
- * 1. Clerk で認証と merchant ロールを検証  
- * 2. MongoDB でユーザーの StripeAccount を取得（存在しなければ 404）  
- * 3. Stripe API で `account_onboarding` 用の AccountLink を生成  
- *
- * ### HTTP ステータス
- * - **200**: 発行成功  
- * - **401**: 未認証  
- * - **403**: merchant ロールではない  
- * - **404**: Stripe アカウント未作成  
- * - **500**: 予期しないエラー  
- *
- * @param req - `NextRequest` オブジェクト
- * @returns `NextResponse`
- * ```json
- * // 成功時
- * { "url": "https://connect.stripe.com/..." }
- * // エラー時
- * { "error": "説明" }
- * ```
- */
 export async function POST(req: NextRequest) {
   try {
     const { userId } = await auth();
-    
+
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // merchant役割の確認
     const user = await currentUser();
     if (!user || user.unsafeMetadata?.role !== 'merchant') {
-      return NextResponse.json({ 
-        error: 'Only merchants can access Stripe Connect onboarding' 
+      return NextResponse.json({
+        error: 'Only merchants can access Stripe Connect onboarding',
       }, { status: 403 });
     }
 
-    await dbConnect();
+    const accountId = await readStripeAccountId(userId);
 
-    const stripeAccount = await StripeAccount.findOne({ ownerId: userId });
-    
-    if (!stripeAccount) {
-      return NextResponse.json({ 
-        error: 'Stripe account not found. Please create an account first.' 
+    if (!accountId) {
+      return NextResponse.json({
+        error: 'Stripe account not found. Please create an account first.',
       }, { status: 404 });
     }
 
-    // オンボーディング用のAccountLinkを作成
+    const stripe = getStripeClient();
+    if (!stripe) {
+      return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 });
+    }
+
     const locale = detectLocale(req);
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? req.nextUrl.origin;
+    const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+    const refreshUrl = `${normalizedBaseUrl}/${locale}/settings?stripe_onboarding=retry`;
+    const returnUrl = `${normalizedBaseUrl}/${locale}/products?stripe_onboarding=complete`;
+
     const accountLink = await stripe.accountLinks.create({
-      account: stripeAccount.stripeAccountId,
-      refresh_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/settings?stripe_refresh=true`,
-      return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${locale}/settings?stripe_onboarding=complete`,
+      account: accountId,
       type: 'account_onboarding',
+      refresh_url: refreshUrl,
+      return_url: returnUrl,
     });
 
-    return NextResponse.json({
-      url: accountLink.url,
-    });
-
+    return NextResponse.json({ url: accountLink.url });
   } catch (error) {
-    console.error('Error creating onboarding link:', error);
-    return NextResponse.json(
-      { error: 'Failed to create onboarding link' },
-      { status: 500 }
-    );
+    console.error('Stripe Connect onboarding link creation failed', error);
+    return NextResponse.json({ error: 'Failed to start onboarding' }, { status: 500 });
   }
 }

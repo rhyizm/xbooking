@@ -28,7 +28,7 @@ Playwright で UI を介さずに Clerk にログインし、ストレージ状�
 ```bash
 export CLERK_SECRET_KEY=sk_...            # Clerk 管理APIキー（機密）
 export CLERK_TEST_USER_ID=user_...        # 1) で控えたユーザーID
-export E2E_BASE_URL=http://localhost:3999 # このアプリは dev で 3999 ポート
+export E2E_BASE_URL=http://localhost:3000 # このアプリは dev で 3000 ポート
 # 任意: export E2E_LOCALE=ja             # 既定は 'en'
 ```
 
@@ -40,7 +40,7 @@ pnpm exec playwright install
 
 4) アプリを起動（別ターミナル）
 ```bash
-pnpm dev  # http://localhost:3999
+pnpm dev  # http://localhost:3000
 ```
 
 5) E2E テストを実行

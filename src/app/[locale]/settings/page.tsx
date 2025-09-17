@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import { getTranslations } from 'next-intl/server'; // Use getTranslations for Server Components
-import { auth } from "@clerk/nextjs/server"; // Use Clerk server-side auth
+import { getTranslations } from 'next-intl/server';
+import { auth } from "@clerk/nextjs/server";
 import AccountConnections from "@/components/settings/AccountConnections";
 import GoogleCalendarIntegration from "@/components/settings/GoogleCalendarIntegration";
 import LineMessagingIntegration from "@/components/settings/LineMessagingIntegration";
@@ -10,12 +10,9 @@ import AppearanceSettings from "@/components/settings/AppearanceSettings";
 import { SettingsCard } from '@/components/settings/SettingsCard';
 
 export default async function SettingsPage() {
-  const t = await getTranslations('settings'); // Use await with getTranslations
-  const { userId } = await auth(); // Get Clerk auth
-
-  if (!userId) {
-    redirect('/signin');
-  }
+  const t = await getTranslations('settings');
+  const { userId } = await auth();
+  if (!userId) redirect('/signin');
 
   // Define profile fields using translations
   const profileFields = [

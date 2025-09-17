@@ -7,7 +7,7 @@ export default defineConfig({
   expect: { timeout: 5_000 },
   // Use baseURL for shorter page.goto calls in tests
   use: {
-    baseURL: process.env.E2E_BASE_URL || 'http://localhost:3999',
+    baseURL: process.env.E2E_BASE_URL || 'http://localhost:3000',
     storageState: 'tmp/playwright/state/auth.json',
     locale: 'ja-JP',
     timezoneId: 'Asia/Tokyo',

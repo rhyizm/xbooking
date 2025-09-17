@@ -17,7 +17,6 @@ const TenantSchema = new Schema<ITenant>({
   ownerId: {
     type: String,
     required: true,
-    index: true,
   },
   googleCalendarId: {
     type: String,

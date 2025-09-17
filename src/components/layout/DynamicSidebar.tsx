@@ -11,6 +11,7 @@ import {
   HelpCircle,
   LayoutDashboard,
   Building2,
+  Package,
 } from "lucide-react";
 
 export default function DynamicSidebar() {
@@ -43,6 +44,11 @@ export default function DynamicSidebar() {
       name: t('organization'),
       href: '/organizations',
       icon: <Building2 className="h-5 w-5" />,
+    },
+    {
+      name: t('products'),
+      href: '/products',
+      icon: <Package className="h-5 w-5" />,
     },
   ];
   

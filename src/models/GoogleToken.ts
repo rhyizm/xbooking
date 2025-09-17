@@ -32,7 +32,6 @@ const GoogleTokenSchema = new Schema<IGoogleToken>({
 });
 
 // インデックス
-GoogleTokenSchema.index({ ownerId: 1 });
 GoogleTokenSchema.index({ expiryDate: 1 });
 
 // 暗号化フィールド（必要に応じて）

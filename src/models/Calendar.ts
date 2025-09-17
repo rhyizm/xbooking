@@ -17,7 +17,6 @@ const CalendarSchema = new Schema<ICalendar>({
     type: String,
     required: true,
     unique: true,
-    index: true,
   },
   name: {
     type: String,
@@ -31,7 +30,6 @@ const CalendarSchema = new Schema<ICalendar>({
   ownerId: {
     type: String,
     required: true,
-    index: true,
   },
   isPublic: {
     type: Boolean,
@@ -50,7 +48,6 @@ const CalendarSchema = new Schema<ICalendar>({
 });
 
 // インデックス
-CalendarSchema.index({ googleCalendarId: 1 });
 CalendarSchema.index({ ownerId: 1 });
 CalendarSchema.index({ isPublic: 1 });
 

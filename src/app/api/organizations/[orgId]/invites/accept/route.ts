@@ -2,19 +2,16 @@ import { NextRequest } from 'next/server'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { verifyInvite } from '@/lib/inviteToken'
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ orgId: string }> }) {
+export async function POST(req: NextRequest) {
   const { userId } = await auth();
   if (!userId) return new Response('Unauthorized', { status: 401 });
 
   try {
-    const { orgId } = await params;
     const { token } = await req.json();
     if (!token) return Response.json({ error: 'token is required' }, { status: 400 });
 
     const payload = verifyInvite(token);
-    if (payload.orgId !== orgId) {
-      return Response.json({ error: 'Invite does not match organization' }, { status: 400 });
-    }
+    const orgId = payload.orgId;
 
     const clerk = await clerkClient();
     // If already a member, return success idempotently

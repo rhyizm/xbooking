@@ -22,10 +22,18 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ org
 
     const token = signInvite({ orgId, role, expHours: ttlHours });
 
+    // Resolve organization slug for friendly URL
+    let orgSlug: string | null = null;
+    try {
+      const org = await clerk.organizations.getOrganization({ organizationId: orgId });
+      orgSlug = org?.slug ?? null;
+    } catch {}
+
     const url = new URL(req.url);
     const originFromEnv = process.env.NEXT_PUBLIC_BASE_URL;
     const origin = originFromEnv && originFromEnv.length > 0 ? originFromEnv : `${url.origin}`;
-    const path = locale ? `/${locale}/organizations/${orgId}/invites` : `/organizations/${orgId}/invites`;
+    const slugOrId = orgSlug ?? orgId;
+    const path = locale ? `/${locale}/organizations/${slugOrId}/invites` : `/organizations/${slugOrId}/invites`;
     const inviteUrl = `${origin}${path}?token=${encodeURIComponent(token)}`;
 
     return Response.json({ success: true, inviteUrl, role, ttlHours: ttlHours ?? null }, { status: 201 });

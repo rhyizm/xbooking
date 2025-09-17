@@ -71,7 +71,4 @@ const CalendarSettingsSchema = new Schema<ICalendarSettings>({
   timestamps: true,
 });
 
-// インデックス
-CalendarSettingsSchema.index({ tenantId: 1 });
-
 export const CalendarSettings = mongoose.models.CalendarSettings || mongoose.model<ICalendarSettings>('CalendarSettings', CalendarSettingsSchema);

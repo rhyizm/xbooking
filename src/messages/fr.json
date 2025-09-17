@@ -18,7 +18,11 @@
     "privacyPolicy": "Politique de confidentialité",
     "termsOfUse": "Conditions d'utilisation",
     "dashboard": "Tableau de bord",
-    "organization": "Organisation"
+    "organization": "Organisation",
+    "products": "Produits"
+  },
+  "products": {
+    "title": "Produits et Tarifs"
   },
   "organization": {
     "title": "Organisations",

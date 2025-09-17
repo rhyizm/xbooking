@@ -18,7 +18,11 @@
     "privacyPolicy": "プライバシーポリシー",
     "termsOfUse": "利用規約",
     "dashboard": "ダッシュボード",
-    "organization": "組織"
+    "organization": "組織",
+    "products": "商品・価格"
+  },
+  "products": {
+    "title": "商品・価格の管理"
   },
   "organization": {
     "title": "組織",
